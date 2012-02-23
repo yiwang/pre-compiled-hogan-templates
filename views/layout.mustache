@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="/javascripts/hogan-1.0.5.min.js"></script>
+    <script src="/templates.js"></script>
+	<title>Shared pre-compiled hogan template example</title>
+</head>
+<body>
+    <article>
+    {{>article}}
+    </article>
+    <fieldset>
+        <legend>Change the article contents<legend>
+        <form>
+            <label>Headline</label>
+            <input type="text" name="headline" value="This is a client-side rendered headline">
+            <label>Body</label>
+            <textarea name="bodyText">This is a client-side rendered body</textarea>
+            <input type="submit" value="Update article with with shared pre-compiled template">
+        </form>
+    </fieldset>
+    <script>
+        
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+        $(function() {
+            var article = $("article"),
+                form = $("form");
+            form.submit(function(event) {
+                event.preventDefault();
+                article.html(templates.article.render(form.serializeObject()));
+            });
+        });
+    </script>
+</body>
+</html>

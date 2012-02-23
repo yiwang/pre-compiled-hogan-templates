@@ -1,0 +1,11 @@
+{ "name"            : "pre-compiled and shred hogan.js template example"
+, "description"     : "This is an example app in Express on how to pre-compile and share templates between the server and client."
+, "homepage"        : "http://www.edave.net"
+, "repository"      : "ssh://git@shinjuku/nicetoeatyou.git"
+, "version"         : "1.0"
+, "dependencies"    : {
+    "express": "2.5.8",
+	"hogan.js": "x.x.x"
+  },
+, "engines"         : { "node": ">=0.6.0" }
+}
