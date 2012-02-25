@@ -7,5 +7,6 @@
 
 # Quick install
 	$ git clone git://github.com/dave-elkan/pre-compiled-hogan-templates.git
+	$ cd pre-compiled-hogan-templates
 	$ npm install -d
     $ node app.js
