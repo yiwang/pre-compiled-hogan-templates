@@ -37,7 +37,7 @@ var hoganHtmlRenderer = {
  * Reads and compiles hogan templates from the shared template 
  * directory to stringified javascript functions.
  */
-function readSharedTemplates(req, res, next) {
+function readSharedTemplates() {
     var sharedTemplateFiles = fs.readdirSync(sharedTemplateDirectory);
 
     // Here we'll stash away the shared templates compiled script (as a string) and the name of the template.
@@ -59,23 +59,20 @@ function readSharedTemplates(req, res, next) {
 
         // Stash the compiled template reference.
         app.sharedTemplates.push({
-            functionName: functionName,
+            id: functionName,
             script: hogan.compile(fileContents, {asString: true}),
             // Since mustache doesn't boast an 'isLast' function we need to do that here instead.
             last: i === app.sharedTemplates.length - 1
         });
     });
-    // Next will only be available in dev mode.
-    if (next) {
-        next();
-    }
 }
 
-// Configuration
-app.configure('development', function() {
-  // Load the sharedTemplates every request in development
-  app.use(readSharedTemplates);
-});
+function readSharedTemplatesMiddleware(req, res, next) {
+    if (!app.sharedTemplates || app.settings.env === "development") {
+        readSharedTemplates();
+    }
+    next();
+}   
 
 app.configure(function() {
   app.set('views', __dirname + '/views');
@@ -94,8 +91,10 @@ app.configure('development', function(){
 app.configure('production', function() {
   app.use(express.errorHandler()); 
   // Load the templates only once in production
-  readSharedTemplates();
 });
+
+// Read the templates initially when starting up
+readSharedTemplates();
 
 /**
  * Request handler for pre-compiled hogan.js templates.
@@ -103,11 +102,11 @@ app.configure('production', function() {
  * This function uses a hogan template of it's own which renders
  * calls to Hogan.Tempate. See views/sharedTemplates.mustache.
  */
-app.get("/templates.js", function(req, res, next) {
+app.get("/templates.js", readSharedTemplatesMiddleware, function(req, res, next) {
     var content = sharedTemplateTemplate.render({
         templates: app.sharedTemplates 
     });
-    res.contentType("text/javascript");
+    res.contentType("application/javascript");
     res.send(content);
 });
 

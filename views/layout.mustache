@@ -14,13 +14,15 @@
     {{>article}}
     </article>
     <fieldset>
-        <legend>Change the article contents<legend>
-        <form>
+        <legend>Change the article contents</legend>
+        <form class="well">
             <label>Headline</label>
-            <input type="text" name="headline" value="This is a client-side rendered headline">
-            <label>Body</label>
-            <textarea name="bodyText">This is a client-side rendered body</textarea>
-            <input type="submit" value="Update article with with shared pre-compiled template">
+            <input type="text" class="span4" name="headline" value="This is a client-side rendered headline">
+            <label>
+                Body
+                <textarea class="span4" name="bodyText" rows="5">This is a client-side rendered body</textarea>
+            </label>
+            <button type="submit" class="btn">Submit</button>
         </form>
     </fieldset>
     <script>
