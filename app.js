@@ -56,13 +56,12 @@ function readSharedTemplates() {
 
         // Stash the partial reference.
         app.sharedPartials[functionName] = fileContents;
-
         // Stash the compiled template reference.
         app.sharedTemplates.push({
             id: functionName,
             script: hogan.compile(fileContents, {asString: true}),
             // Since mustache doesn't boast an 'isLast' function we need to do that here instead.
-            last: i === app.sharedTemplates.length - 1
+            last: i === sharedTemplateFiles.length - 1
         });
     });
 }
