@@ -6,6 +6,6 @@
   [Read more here](http://www.edave.net/2012/02/25/sharing-pre-compiled-templates-between-server-and-client-with-hogan-js)
 
 # Quick install
-	$ git clone git://github.com/dave-elkan/shared-precompiled-hogan.git
+	$ git clone git://github.com/dave-elkan/pre-compiled-hogan-templates.git
 	$ npm install -d
     $ node app.js
