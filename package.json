@@ -1,4 +1,4 @@
-{ "name"            : "hogan template example"
+{ "name"            : "pre-compiled-hogan-templates-example"
 , "description"     : "This is an example app in Express on how to pre-compile and share templates between the server and client."
 , "homepage"        : "http://www.edave.net"
 , "repository"      : "ssh://git@shinjuku/nicetoeatyou.git"
